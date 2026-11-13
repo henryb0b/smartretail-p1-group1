@@ -11,7 +11,7 @@ SmartRetail P1 is a C++17 group project that monitors retail inventory, identifi
 |---|---|---|
 | Bui Viet Hoang | henryb0b | Team Leader |
 | Nguyen Van Viet Thong | vthonq | Member |
-| Phan Nhat ThaoTram | To be updated | Member |
+| Phan Nhat ThaoTram | thaotram72 | Member |
 
 ## Project Structure
 
