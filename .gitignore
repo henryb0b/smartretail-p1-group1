@@ -1,0 +1,16 @@
+# Compiled C++ programs
+/bin/
+*.exe
+*.out
+*.o
+*.obj
+
+# macOS
+.DS_Store
+
+# VS Code local settings
+.vscode/
+
+# Temporary files
+*.tmp
+*.log
