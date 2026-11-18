@@ -127,7 +127,7 @@ bool parseArgs(const std::vector<std::string>& args, Options& opt) {
 //   3 <= stock <= 5 -> 3 (LOW STOCK)
 //   stock > 5       -> 0 (no alert / AVAILABLE)
 int stockLevel(int stock) {
-    int level = 0;
+    int level;
 
     if (stock == 0) {
         level = 1;
@@ -151,7 +151,7 @@ int stockLevel(int stock) {
 //   3 -> "LOW STOCK"
 //   0 (or other) -> "AVAILABLE"
 std::string statusName(int level) {
-    std::string name = "AVAILABLE";
+    std::string name;
 
     if (level == 1) {
         name = "OUT OF STOCK";
