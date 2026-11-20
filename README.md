@@ -87,7 +87,7 @@ Do not commit directly to `main`.
 | T16 | Test cases | tests/test_cases.md, tests/expected/ | Thong (vthonq) | Tram (thaotram72) | not needed | |
 | T17 | Slides | docs/slides.pdf | Tram (thaotram72) | Thong (vthonq) | not needed | |
 | T18 | Final README + tag final | README.md | Hoang (henryb0b) | Thong (vthonq) | not needed | |
-| T19 | M1 coordination: task table, PR template, folders | README.md, .github, tests/, docs/images/ | Hoang (henryb0b) | Tram (thaotram72) | not needed | |
+| T19 | M1 coordination: task table, PR template, folders | README.md, .github, tests/, docs/images/ | Hoang (henryb0b) | Tram (thaotram72) | not needed | #4 |
 
 ## AI Tools Declaration
 
