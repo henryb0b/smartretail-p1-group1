@@ -16,7 +16,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <fstream>
 
 // ===================== T02 - Structs (Hoang) =====================
 
@@ -122,175 +121,56 @@ bool parseArgs(const std::vector<std::string>& args, Options& opt) {
 
 // ===================== T03 - stockLevel, statusName (Thong) =====================
 
+// Returns priority level for a stock value:
+//   stock == 0      -> 1 (OUT OF STOCK, highest priority)
+//   1 <= stock <= 2 -> 2 (CRITICAL)
+//   3 <= stock <= 5 -> 3 (LOW STOCK)
+//   stock > 5       -> 0 (no alert / AVAILABLE)
+int stockLevel(int stock) {
+    int level;
+
+    if (stock == 0) {
+        level = 1;
+    }
+    else if (stock <= 2) {
+        level = 2;
+    }
+    else if (stock <= 5) {
+        level = 3;
+    }
+    else {
+        level = 0;
+    }
+
+    return level;
+}
+
+// Returns the status label for a priority level:
+//   1 -> "OUT OF STOCK"
+//   2 -> "CRITICAL"
+//   3 -> "LOW STOCK"
+//   0 (or other) -> "AVAILABLE"
+std::string statusName(int level) {
+    std::string name;
+
+    if (level == 1) {
+        name = "OUT OF STOCK";
+    }
+    else if (level == 2) {
+        name = "CRITICAL";
+    }
+    else if (level == 3) {
+        name = "LOW STOCK";
+    }
+    else {
+        name = "AVAILABLE";
+    }
+
+    return name;
+}
+
 // ===================== T04 - splitLine, isInteger, loadProducts (Tram) =====================
-    // Check whether string s is a valid non-negative integer.
-bool isInteger(const std::string& s) {
-    if (s.empty()) {
-        return false;
-    }
 
-    int i = 0;
-    long long value = 0;
-    while (i < static_cast<int>(s.size())) {
-        if (s[i] < '0' || s[i] > '9') {
-            return false;
-        }
-        int digit = s[i] - '0';
-        value = value * 10 + digit;
-        i = i + 1;
-    }
-
-    return true;
-}
-
-    // Separate a line of CSV data by commas ',' and remove the '\r' at the end of the line if present.
-std::vector<std::string> splitLine(std::string line) {
-    if (!line.empty() && line.back() == '\r') {
-        line.pop_back();
-    }
-
-    std::vector<std::string> cols;
-    std::string current = "";
-    int i = 0;
-
-    while (i < static_cast<int>(line.size())) {
-        if (line[i] == ',') {
-            cols.push_back(current);
-            current = "";
-        } else {
-            current += line[i];
-        }
-        i = i + 1;
-    }
-
-    cols.push_back(current);
-    return cols;
-}
-
-    // Convert a string to a long long value (as in, has passed isInteger))
-long long parsePrice(const std::string& s) {
-    long long value = 0;
-    for (int i = 0; i < static_cast<int>(s.size()); i++) {
-        int digit = s[i] - '0';
-        value = value * 10 + digit;
-    }
-    return value;
-}
-
-    // Validate and convert the rating (non-negative number, with a maximum of one decimal place)
-bool parseRating(const std::string& s, double& outRating) {
-    if (s.empty()) {
-        return false;
-    }
-
-    int dotCount = 0;
-    int digitCount = 0;
-    int i = 0;
-
-    while (i < static_cast<int>(s.size())) {
-        if (s[i] == '.') {
-            dotCount = dotCount + 1;
-            if (dotCount > 1) {
-                return false;
-            }
-        } else if (s[i] >= '0' && s[i] <= '9') {
-            digitCount = digitCount + 1;
-        } else {
-            return false;
-        }
-        i = i + 1;
-    }
-
-    if (digitCount == 0) {
-        return false;
-    }
-
-    double parsed = 0.0;
-    bool afterDot = false;
-    double decimalPlace = 0.1;
-    i = 0;
-
-    while (i < static_cast<int>(s.size())) {
-        if (s[i] == '.') {
-            afterDot = true;
-        } else {
-            int digit = s[i] - '0';
-            if (!afterDot) {
-                parsed = parsed * 10.0 + static_cast<double>(digit);
-            } else {
-                parsed = parsed + static_cast<double>(digit) * decimalPlace;
-                decimalPlace = decimalPlace * 0.1;
-            }
-        }
-        i = i + 1;
-    }
-
-    if (parsed < 0.0 || parsed > 5.0) {
-        return false;
-    }
-
-    outRating = parsed;
-    return true;
-}
-
-    // Check for duplicate product_id (keep the first record)
-bool hasDuplicateID(const std::string& productId, const std::vector<Product>& products) {
-    for (int i = 0; i < static_cast<int>(products.size()); i++) {
-        if (products[i].id == productId) {
-            return true;
-        }
-    }
-    return false;
-}
-
-    // Read products.csv, validate the data, flag any erroneous rows, and load the data into the products table.
-bool loadProducts(const std::string& path, std::vector<Product>& products) {
-    std::ifstream file(path);
-    if (!file.is_open()) {
-        std::cerr << "Error: cannot open file " << path << "\n";
-        return false;
-    }
-
-    int lineNumber = 1;
-    std::string line;
-
-    if (!std::getline(file, line)) {
-        file.close();
-        return true;
-    }
-
-    while (std::getline(file, line)) {
-        lineNumber = lineNumber + 1;
-        std::vector<std::string> cols = splitLine(line);
-
-        if (cols.size() != 6) {
-            std::cerr << "Warning (line " << lineNumber << "): expected 6 columns, got "
-                      << cols.size() << ". Row skipped.\n";
-            continue;
-        }
-
-        bool validPrice = isInteger(cols[4]);
-        double parsedRating = 0.0;
-        bool validRating = parseRating(cols[5], parsedRating);
-        bool isDuplicateID = hasDuplicateID(cols[0], products);
-
-        if (!cols[0].empty() && validPrice && validRating && !isDuplicateID) {
-            Product p;
-            p.id = cols[0];
-            p.name = cols[1];
-            p.category = cols[2];
-            p.brand = cols[3];
-            p.price = parsePrice(cols[4]);
-            p.rating = parsedRating;
-            products.push_back(p);
-        } else {
-            std::cerr << "Warning (line " << lineNumber << "): invalid product data. Row skipped.\n";
-        }
-    }
-
-    file.close();
-    return true;
-}
 // ===================== T05 - sortProducts, findProduct, binarySearch (Hoang) =====================
 
 // ===================== T06 - loadStock (Tram) =====================
