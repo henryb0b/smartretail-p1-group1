@@ -122,6 +122,54 @@ bool parseArgs(const std::vector<std::string>& args, Options& opt) {
 
 // ===================== T03 - stockLevel, statusName (Thong) =====================
 
+// Returns priority level for a stock value:
+//   stock == 0      -> 1 (OUT OF STOCK, highest priority)
+//   1 <= stock <= 2 -> 2 (CRITICAL)
+//   3 <= stock <= 5 -> 3 (LOW STOCK)
+//   stock > 5       -> 0 (no alert / AVAILABLE)
+int stockLevel(int stock) {
+    int level;
+
+    if (stock == 0) {
+        level = 1;
+    }
+    else if (stock <= 2) {
+        level = 2;
+    }
+    else if (stock <= 5) {
+        level = 3;
+    }
+    else {
+        level = 0;
+    }
+
+    return level;
+}
+
+// Returns the status label for a priority level:
+//   1 -> "OUT OF STOCK"
+//   2 -> "CRITICAL"
+//   3 -> "LOW STOCK"
+//   0 (or other) -> "AVAILABLE"
+std::string statusName(int level) {
+    std::string name;
+
+    if (level == 1) {
+        name = "OUT OF STOCK";
+    }
+    else if (level == 2) {
+        name = "CRITICAL";
+    }
+    else if (level == 3) {
+        name = "LOW STOCK";
+    }
+    else {
+        name = "AVAILABLE";
+    }
+
+    return name;
+}
+
 // ===================== T04 - splitLine, isInteger, loadProducts (Tram) =====================
     // Check whether string s is a valid non-negative integer.
 bool isInteger(const std::string& s) {
