@@ -72,7 +72,7 @@ Do not commit directly to `main`.
 | T01 | Repo skeleton | .gitignore, PR template, README | Hoang (henryb0b) | Tram (thaotram72) | not needed | #1 |
 | T02 | main.cpp skeleton, structs, CLI args | Product, StockItem, Alert, CategoryStat, parseArgs, main | Hoang (henryb0b) | Thong (vthonq) | yes | #2 |
 | T03 | Stock classification (core) | Core function stockLevel, statusName | Thong (vthonq) | Hoang (henryb0b) | yes | #3 |
-| T04 | Read products.csv | splitLine, isInteger, loadProducts | Tram (thaotram72) | Thong (vthonq) | yes | |
+| T04 | Read products.csv | splitLine, isInteger, loadProducts | Tram (thaotram72) | Thong (vthonq) | yes | #8 |
 | T05 | Sort catalogue + recursive binary search | sortProducts, findProduct, binarySearch | Hoang (henryb0b) | Tram (thaotram72) | yes | |
 | T06 | Read inventory.csv | loadStock | Tram (thaotram72) | Hoang (henryb0b) | yes | |
 | T07 | Store table + summary | printStoreTable, countByLevel | Thong (vthonq) | Tram (thaotram72) | yes | |
