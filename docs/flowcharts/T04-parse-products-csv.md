@@ -8,6 +8,7 @@
 ![Flowchart splitLine](T04-split-line.drawio.png)
 
 Pseudocode
+
     FUNCTION isInteger(s)
         IF s.empty() THEN
             RETURN false
