@@ -171,27 +171,24 @@ std::string statusName(int level) {
 }
 
 // ===================== T04 - splitLine, isInteger, loadProducts (Tram) =====================
-    // Check whether string s is a valid non-negative integer.
+// Check whether string s is a valid non-negative integer.
 bool isInteger(const std::string& s) {
     if (s.empty()) {
         return false;
     }
 
     int i = 0;
-    long long value = 0;
     while (i < static_cast<int>(s.size())) {
         if (s[i] < '0' || s[i] > '9') {
             return false;
         }
-        int digit = s[i] - '0';
-        value = value * 10 + digit;
         i = i + 1;
     }
 
     return true;
 }
 
-    // Separate a line of CSV data by commas ',' and remove the '\r' at the end of the line if present.
+// Separate a line of CSV data by commas ',' and remove the '\r' at the end of the line if present.
 std::vector<std::string> splitLine(std::string line) {
     if (!line.empty() && line.back() == '\r') {
         line.pop_back();
@@ -215,7 +212,7 @@ std::vector<std::string> splitLine(std::string line) {
     return cols;
 }
 
-    // Convert a string to a long long value (as in, has passed isInteger))
+// Convert a string to a long long value (as in, has passed isInteger))
 long long parsePrice(const std::string& s) {
     long long value = 0;
     for (int i = 0; i < static_cast<int>(s.size()); i++) {
@@ -225,7 +222,7 @@ long long parsePrice(const std::string& s) {
     return value;
 }
 
-    // Validate and convert the rating (non-negative number, with a maximum of one decimal place)
+// Validate and convert the rating (non-negative number in [0.0, 5.0], supporting one or more decimal places)
 bool parseRating(const std::string& s, double& outRating) {
     if (s.empty()) {
         return false;
@@ -281,7 +278,7 @@ bool parseRating(const std::string& s, double& outRating) {
     return true;
 }
 
-    // Check for duplicate product_id (keep the first record)
+// Check for duplicate product_id (keep the first record)
 bool hasDuplicateID(const std::string& productId, const std::vector<Product>& products) {
     for (int i = 0; i < static_cast<int>(products.size()); i++) {
         if (products[i].id == productId) {
@@ -291,7 +288,7 @@ bool hasDuplicateID(const std::string& productId, const std::vector<Product>& pr
     return false;
 }
 
-    // Read products.csv, validate the data, flag any erroneous rows, and load the data into the products table.
+// Read products.csv, validate the data, flag any erroneous rows, and load the data into the products table.
 bool loadProducts(const std::string& path, std::vector<Product>& products) {
     std::ifstream file(path);
     if (!file.is_open()) {
@@ -339,6 +336,7 @@ bool loadProducts(const std::string& path, std::vector<Product>& products) {
     file.close();
     return true;
 }
+
 // ===================== T05 - sortProducts, findProduct, binarySearch (Hoang) =====================
 
 // ===================== T06 - loadStock (Tram) =====================
